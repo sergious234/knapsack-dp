@@ -1,4 +1,6 @@
 use leptos::prelude::*;
+use crate::formula::KnapsackFormula;
+use crate::components::legend::KnapsackLegend;
 
 // ─── Domain ──────────────────────────────────────────────────────────────────
 
@@ -264,6 +266,8 @@ pub fn KnapsackVisualizer() -> impl IntoView {
                 })}
             </section>
 
+            {KnapsackFormula()}
+
             // ── Table ────────────────────────────────────────────────────────
             {move || dp_table.get().map(|table| {
 
@@ -394,6 +398,9 @@ pub fn KnapsackVisualizer() -> impl IntoView {
                     </section>
                 }
             })}
+
+
+            {KnapsackLegend()}
 
         </div>
     }

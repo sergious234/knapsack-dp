@@ -5,10 +5,12 @@ use leptos_router::{components::*, path};
 // Modules
 mod components;
 mod pages;
+mod formula;
 pub mod knapsack;
 
 // Top-Level pages
 use crate::pages::home::Home;
+pub use formula::KnapsackFormula;
 pub use knapsack::KnapsackVisualizer;
 
 /// An app router which renders the homepage and handles 404's
