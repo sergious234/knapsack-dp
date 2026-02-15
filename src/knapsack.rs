@@ -266,11 +266,26 @@ pub fn KnapsackVisualizer() -> impl IntoView {
 
             // ── Table ────────────────────────────────────────────────────────
             {move || dp_table.get().map(|table| {
+
                 let cap  = capacity.get();
                 let ws   = item_weights.get();
                 let bs   = item_benefits.get();
                 let n    = ws.len();          // number of items
                 let n_cols = cap + 1;
+
+                let backtrack: std::collections::HashSet<(usize, usize)> = if revealed.get().is_none() {
+                    let mut path = std::collections::HashSet::new();
+                    let mut w = cap;
+                    for i in (1..=n).rev() {
+                        if table[i][w] != table[i - 1][w] {
+                            path.insert((i, w));
+                            w -= ws[i - 1];
+                        }
+                    }
+                    path
+                } else {
+                    std::collections::HashSet::new()
+                };
 
                 // Current "active" cell for highlighting (last revealed - 1)
                 let active_linear: Option<usize> = revealed.get()
@@ -320,6 +335,7 @@ pub fn KnapsackVisualizer() -> impl IntoView {
                                                 let linear = (i - 1) * n_cols + c;
                                                 let visible = is_visible(i, c, n_cols);
                                                 let is_active = active_linear == Some(linear);
+                                                let is_backtrack = backtrack.contains(&(i,c));
                                                 let val = table[i][c];
 
                                                 // Did we take the item in this cell?
@@ -334,13 +350,19 @@ pub fn KnapsackVisualizer() -> impl IntoView {
                                                     "cell cell-active"
                                                 } else if took_item {
                                                     "cell cell-took"
+                                                }else if is_backtrack {
+                                                    "cell cell-backtrack"
                                                 } else {
                                                     "cell"
                                                 };
 
                                                 view! {
                                                     <td class=cls>
-                                                        {if visible { val.to_string() } else { String::new() }}
+
+                                                    {if visible { val.to_string() } else { String::new() }}
+                                                    {is_backtrack.then(|| { view!{<span class="star">"★"</span>} })}//
+
+
                                                     </td>
                                                 }
                                             }).collect_view()}

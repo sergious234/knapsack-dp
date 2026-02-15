@@ -349,3 +349,17 @@ input:focus {
   color:      var(--text-dim);
   letter-spacing: 0.05em;
 }
+
+.cell-backtrack {
+    background:   color-mix(in srgb, #a78bfa 18%, transparent);
+    border-color: #a78bfa;
+    color:        #a78bfa;
+    font-weight:  700;
+}
+
+.star {
+    display:    block;
+    font-size:  0.6rem;
+    line-height: 1;
+    color:      #a78bfa;
+}

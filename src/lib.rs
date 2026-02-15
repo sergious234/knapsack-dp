@@ -5,7 +5,6 @@ use leptos_router::{components::*, path};
 // Modules
 mod components;
 mod pages;
-mod mochila;
 pub mod knapsack;
 
 // Top-Level pages
