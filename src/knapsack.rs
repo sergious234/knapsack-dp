@@ -270,7 +270,6 @@ pub fn KnapsackVisualizer() -> impl IntoView {
 
             // ── Table ────────────────────────────────────────────────────────
             {move || dp_table.get().map(|table| {
-
                 let cap  = capacity.get();
                 let ws   = item_weights.get();
                 let bs   = item_benefits.get();
@@ -352,10 +351,10 @@ pub fn KnapsackVisualizer() -> impl IntoView {
                                                     "cell cell-hidden"
                                                 } else if is_active {
                                                     "cell cell-active"
-                                                } else if took_item {
-                                                    "cell cell-took"
                                                 }else if is_backtrack {
                                                     "cell cell-backtrack"
+                                                } else if took_item {
+                                                    "cell cell-took"
                                                 } else {
                                                     "cell"
                                                 };
